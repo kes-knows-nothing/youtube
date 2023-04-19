@@ -1,5 +1,5 @@
 export const join = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("join")
 }
 
 export const home = (req, res) => {
@@ -7,9 +7,13 @@ export const home = (req, res) => {
 }
 
 export const edit = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("editprofile")
 }
 
 export const remove = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("remove")
 }
+
+export const profile = (req, res) => {
+    res.render("profile")
+} 

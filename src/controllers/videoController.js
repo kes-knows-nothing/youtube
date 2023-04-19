@@ -1,11 +1,15 @@
 export const trending = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("trending")
 }
 
 export const watch = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("watch")
 }
 
 export const edit = (req, res) => {
-    res.send("<h1>정말 제 정신이십니까?</h1>")
+    res.render("videoedit")
+}
+
+export const videohome = (req, res) => {
+    res.render("videohome")
 }
