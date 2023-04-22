@@ -3,9 +3,10 @@ html(lang='ko')
 
     head 
         title 진짜 힘들어요^^;
-        link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css") 
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
 
     body 
+        h1 #{pageTitle}
         block content
 
-    include ./partials/footer.pug
+    include ./partials/footer

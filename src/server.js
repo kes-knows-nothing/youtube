@@ -16,7 +16,4 @@ app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/user", userRouter);
 
-
-app.listen(4000, function() {
-  console.log("Server is running on port 4000.")
-})
+export default app

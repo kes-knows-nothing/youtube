@@ -1,4 +1,6 @@
 extend base.pug
 
-block content         
-    h1 와치
+block content  
+    p=video.description
+    small=video.createAt        
+    a(href=`${video.id}/edit`) Edit Video &rarr;

@@ -1,15 +1,41 @@
-export const trending = (req, res) => {
-    res.render("trending")
+import Video from "../Model/video"
+
+export const home = async (req, res) => {
+    const videos = await Video.find({});
+    return res.render("home", { pageTitle: "Home"}, videos)
 }
 
 export const watch = (req, res) => {
-    res.render("watch")
+    const { id } = req.params;
+    return res.render("watch" , { pageTitle: "Watch"})
 }
 
-export const edit = (req, res) => {
-    res.render("videoedit")
+export const getEdit = (req, res) => {
+    const { id } = req.params;
+    return res.render("edit", { pageTitle: "Editing"})
 }
 
-export const videohome = (req, res) => {
-    res.render("videohome")
+export const postEdit = (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+    return res.redirect(`/videos/${id}`);
+}
+
+export const getUpload = (req, res) => {
+    return res.render("upload", { pageTitle: "Upload Video"})
+}
+
+export const postUpload = (req, res) => {
+    const { title, description, hashtags } = req.body;
+    const video = new Video({
+        title, 
+        description,
+        createdAt: Date.now(),
+        meta: {
+            views:0,
+            rating:0,
+        },
+        hashtags: hashtags.split(",").map((word) => `#${word}`),
+    })
+    return res.redirect("/");
 }
