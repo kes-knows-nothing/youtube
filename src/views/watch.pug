@@ -1,6 +1,8 @@
 extend base.pug
 
-block content  
+block content
+    h1=video.title
     p=video.description
-    small=video.createAt        
+    small=video.createdAt
+    br
     a(href=`${video.id}/edit`) Edit Video &rarr;

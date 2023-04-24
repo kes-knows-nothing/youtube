@@ -1,5 +1,10 @@
 extend base.pug
 
-block content         
-    h1 비디오에딧
+block content
+    h4 Update Video         
+    form(method="POST")
+        input(placeholder="Title", required, type="text", name="title", value=video.title)
+        input(placeholder="Description", required, type="text", name="description" value=video.description)
+        input(placeholder="Hashtags, separated by comma.", required, type="text", name="hashtags" value=video.hashtags.join())
+        input(type="submit", value="Edit Video")
     
