@@ -1,5 +1,6 @@
 import "./db";
-import "./Model/video";
+import "./models/Video";
+import "./models/User";
 import app from "./server";
 
 app.listen(4000, function() {
