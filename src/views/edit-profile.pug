@@ -1,4 +1,15 @@
 extend base.pug
 
-block content         
-    h1 에딧프로필
+block content
+    if errorMessage 
+        span=errorMessage       
+    form(method="POST")
+        input(placeholder="email", type="email", value=loggedInUser.email)
+        input(placeholder="Name", name="name", type="text", required, value=loggedInUser.name)
+        input(placeholder="Username", name="username", type="text", required, value=loggedInUser.username)
+        input(placeholder="Location",name="location", type="text", required, value=loggedInUser.location)
+        input(type="submit", value="Update Profile")
+        
+        if !loggedInUser.socialOnly
+
+            a(href="/users/changepassword") Change Password &rarr;

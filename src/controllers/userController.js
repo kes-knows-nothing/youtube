@@ -88,14 +88,14 @@ export const finishGibhubLogin = async (req, res) => {
             }
         }
         )).json();
-        console.log(userData);
+       
         const emailData = await(
             await fetch(`${apiUrl}/user/emails`, {
             headers: {
                 Authorization: `token ${access_token}`
             },
         })).json();
-        console.log(emailData);
+        
         const emailObj = emailData.find(
             (email) => email.primary === true && email.verified === true
         );
@@ -129,12 +129,31 @@ export const logout = (req, res) => {
 }
 
 export const getEdit = (req, res) => {
-    
-    return res.render("edit-profile", { pageTitle: "Edit Profile"})
+    return res.render("edit-profile", { pageTitle: "Edit Profile" , user: req.session.user})
 }
 
-export const postEdit = (req, res) => {
-    return redirect("edit-profile", { pageTitle: "Profile"})
+export const postEdit = async (req, res) => {
+    const {
+        body: { name, email, username, location },
+        session: {
+          user: { _id },
+        },
+      } = req;
+    const findUsername = await User.findOne({ username });
+    const findEmail = await User.findOne({ email });
+    if (
+        (findUsername != null && findUsername._id != _id) ||
+        (findEmail != null && findEmail._id != _id)
+        ) {
+      return res.render("edit-profile", {
+        pageTitle: "Edit  Profile",
+        errorMessage: "User is exist",
+      });
+    }
+
+    const updateUser = await User.findByIdAndUpdate(_id, {name, email, username, location}, {new: true})
+    req.session.user = updateUser;
+    return res.render("edit-profile", { pageTitle: "Profile"})
 }
 
 export const remove = (req, res) => {
@@ -147,3 +166,23 @@ export const profile = async (req, res) => {
     
     return res.render("profile", {user})
 } 
+
+
+
+export const getChangepassword = (req, res) => {
+    return res.render("change-password")
+}
+
+export const postChangepassword = async (req, res) => {
+    const {
+        body: { password, password1 },
+        session: {
+          user: { _id },
+        },
+      } = req;
+    if (password !== password1) {
+        return res.status(400).render("change-password", {pageTitle, errorMessage: "Password confirmation does not match"});
+    }
+    await User.findByIdAndUpdate(_id, {password})
+    return res.render("change-password")
+}
