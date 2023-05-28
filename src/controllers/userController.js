@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 import User from "../models/User";
+import Video from "../models/Video";
 
 export const getJoin = (req, res) => {
     
@@ -134,11 +135,13 @@ export const getEdit = (req, res) => {
 
 export const postEdit = async (req, res) => {
     const {
-        body: { name, email, username, location },
+        body: { name, email, username, location,},
+        file,
         session: {
-          user: { _id },
+          user: { _id, avatarUrl },
         },
       } = req;
+      console.log(file)
     const findUsername = await User.findOne({ username });
     const findEmail = await User.findOne({ email });
     if (
@@ -151,7 +154,9 @@ export const postEdit = async (req, res) => {
       });
     }
 
-    const updateUser = await User.findByIdAndUpdate(_id, {name, email, username, location}, {new: true})
+    const updateUser = await User.findByIdAndUpdate(_id, {
+        avatarUrl: file ? file.path : avatarUrl,
+        name, email, username, location}, {new: true})
     req.session.user = updateUser;
     return res.render("edit-profile", { pageTitle: "Profile"})
 }
@@ -161,28 +166,40 @@ export const remove = (req, res) => {
 }
 
 export const profile = async (req, res) => {
-    const user =  req.session.user
     const { id } = req.params;
-    
-    return res.render("profile", {user})
+    const user = await User.findById(id).populate("videos");
+    if (!user) {
+        return res.status(404).render("404", { pageTitle: "User not found."});
+    }
+    console.log(user)
+    return res.render("profile", {pageTitle: `${user.name}'s Profile`, user})
 } 
 
 
 
 export const getChangepassword = (req, res) => {
-    return res.render("change-password")
+    if (req.session.user.socialOnly === true) {
+        return res.redirect("/");
+    }
+    return res.render("change-password", { pageTitle: "Change Password"})
 }
 
 export const postChangepassword = async (req, res) => {
     const {
-        body: { password, password1 },
+        body: { oldPassword, newPassword1, newPassword },
         session: {
           user: { _id },
         },
       } = req;
-    if (password !== password1) {
+    const user = await User.findById({_id});
+    if (newPassword !== newPassword1) {
         return res.status(400).render("change-password", {pageTitle, errorMessage: "Password confirmation does not match"});
     }
-    await User.findByIdAndUpdate(_id, {password})
-    return res.render("change-password")
+    const match = await bcrypt.compare(user.password, oldPassword)
+    if (!match) {
+        return res.status(404).render("login", {pageTitle: "Login Error", errorMessage: "The current password is incorrect!"})
+    }
+    user.password = newPassword
+    await user.save();
+    return res.redirect("/users/logout")
 }

@@ -2,4 +2,9 @@ extend base.pug
 
 block content         
     h1 #{user.name}님 반갑습니다.
-    a(href="/users/`${user._id}`/edit") 프로필 수정
+    each video in user.videos
+        a(href=`/videos/${video._id}`)=video.title
+        br
+    br
+    div 
+        a(href="/users/`${user._id}`/edit") 프로필 수정
