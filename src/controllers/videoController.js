@@ -59,9 +59,9 @@ export const postEdit = async (req, res) => {
             .map((word) => (word.startsWith("#") ? word : `#${word}`))
         })
         return res.redirect(`/videos/${id}`);
-    }
+};
     
-}
+
 
 export const getUpload = (req, res) => {
     return res.render("upload", { pageTitle: "Upload Video"})
