@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:assets": "webpack",
-    "dev:server": "nodemon"
+    "dev:assets": "webpack --config webpack.config.js",
+    "dev:server": "nodemon --exec babel-node src/init.js"
   },
   "author": "Kes",
   "license": "ISC",

@@ -1,16 +1,33 @@
 extend base.pug
 
 block content
-    video(src="/" + video.fileUrl, controls, width="600")
-    div
-        h1=video.title
-        p=video.description
-        small=video.createdAt
-        br
-        a(href=`/users/${video.owner._id}`)=video.owner.name
-        br
-    br
-    if String(video.owner._id) === loggedInUser._id
-        a(href=`${video.id}/edit`) Edit Video &rarr;
-        br
-        a(href=`${video.id}/delete`) Delete Video &rarr;
+    div#videoContainer
+        video(src="/" + video.fileUrl, controls, width="1000")
+        div#videoControls
+            button#play Play 
+            button#mute Mute
+            input(type="range", min= "0", max="1", step="0.1", id="volume")
+            div
+                span#currentTime 00:00
+                span  / 
+                span#totalTime 00:00
+            div 
+                input(type="range", step="1", value="0", min="0")#timeline
+            div 
+                button#fullScreen Enter Full Screen
+
+    //- div
+    //-     h1=video.title
+    //-     p=video.description
+    //-     small=video.createdAt
+    //-     br
+    //-     a(href=`/users/${video.owner._id}`)=video.owner.name
+    //-     br
+    //- br
+    //- if String(video.owner._id) === loggedInUser._id
+    //-     a(href=`${video.id}/edit`) Edit Video &rarr;
+    //-     br
+    //-     a(href=`${video.id}/delete`) Delete Video &rarr;
+
+block script 
+    script(src="/static/js/videoPlayer.js") 
