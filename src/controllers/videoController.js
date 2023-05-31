@@ -3,6 +3,7 @@ import User from "../models/User";
 
 export const home = async (req, res) => {
     const videos = await Video.find({});
+    console.log(videos)
     return res.render("home", { pageTitle: "Home", videos})
 }
 
@@ -115,4 +116,18 @@ export const deleteVideo = async (req, res) => {
 export const search =  (req, res) => {
 
     return res.render("search", { pageTitle: "Search" });
+};
+
+
+export const registerView = async (req, res) => {
+    const {id} = req.params;
+    const video = await Video.findById(id)
+    console.log(video)
+    if(!video) {
+        return res.sendStatue(404);
+    }
+    
+    video.meta.views = video.meta.views + 1
+    await video.save();
+    return res.sendStatus(200)
 };

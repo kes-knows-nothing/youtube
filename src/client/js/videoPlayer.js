@@ -95,7 +95,10 @@ const handleFullscreen = () => {
         controlsTimeout = setTimeout(hideControls, 3000);
       };
 
-
+const handleEnded = async () => {
+  const {id}= videoContainer.dataset
+  await fetch(`/api/videos/${id}/view`, {method: "POST"})
+}
 
   playBtn.addEventListener("click", handlePlayClick);
   muteBtn.addEventListener("click", handleMuteClick);
@@ -103,6 +106,7 @@ const handleFullscreen = () => {
   timeline.addEventListener("input", handleTimelineChange);
   video.addEventListener("loadedmetadata", handleLoadedMetadata);
   video.addEventListener("timeupdate", handleTimeUpdate);
+  video.addEventListener("ended", handleEnded)
   fullScreenBtn.addEventListener("click", handleFullscreen);
   video.addEventListener("mousemove", handleMouseMove);
   video.addEventListener("mouseleave", handleMouseLeave);
