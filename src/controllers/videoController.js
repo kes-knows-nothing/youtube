@@ -59,6 +59,7 @@ export const postEdit = async (req, res) => {
             .split(",")
             .map((word) => (word.startsWith("#") ? word : `#${word}`))
         })
+        req.flash("ok", success)
         return res.redirect(`/videos/${id}`);
 };
     
@@ -106,6 +107,7 @@ export const deleteVideo = async (req, res) => {
         return res.render("404", {pageTitle: "Video not found!"})
     } 
     if (String(video.owner) !== _id) {
+        req.flash("error", "Not authorized");
         return res.status(403).redirect("/")
     }
     const {id} = req.params;
