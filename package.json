@@ -4,8 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm runn build:assets",
+    "build:server": "babel src -d build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:assets": "webpack --config webpack.config.js",
+    "build:assets": "webpack --mode=production",
+    "dev:assets": "webpack --mode=development  -w --config webpack.config.js",
     "dev:server": "nodemon --exec babel-node src/init.js"
   },
   "author": "Kes",
@@ -27,8 +31,8 @@
     "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.4",
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.22.1",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.21.4",
     "css-loader": "^6.8.1",
