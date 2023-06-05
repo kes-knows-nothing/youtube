@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node build/init.js",
-    "build": "npm run build:server && npm runn build:assets",
+    "build": "npm run build:server && npm run build:assets",
     "build:server": "babel src -d build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:assets": "webpack --mode=production",
