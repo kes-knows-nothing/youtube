@@ -141,8 +141,6 @@ export const createComment = async (req, res) => {
         body: { text },
         params: { id }
     } = req;
-    
-    console.log(`text: ${text}`)
     const video = await Video.findById(id)
     
     if(!video){
@@ -155,5 +153,5 @@ export const createComment = async (req, res) => {
     });
     video.comments.push(comment._id);
     video.save();
-   return res.sendStatus(201)
+   return res.sendStatus(201).json({newCommentId: comment._id});
 }
