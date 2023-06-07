@@ -31,6 +31,13 @@ html(lang='ko')
                             a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name}의 Profile
                         li 
                             a(href="/users/logout") Log Out
+                        li 
+                            a(href=`/users/${loggedInUser._id}`)
+                                if loggedInUser.avatarUrl === ""
+                                    span 😊
+                                else
+                                    if loggedInUser.socialOnly
+                                        span 👀
                     else 
                         li 
                             a(href="/join") Join 

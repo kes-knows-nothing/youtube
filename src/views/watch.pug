@@ -16,6 +16,19 @@ block content
                 input(type="range", step="1", value="0", min="0")#timeline
             div 
                 button#fullScreen Enter Full Screen
+    
+    br
+    if loggedIn
+        div.video__add-comments
+            form.video__comment-form#commentForm 
+                textarea(cols="30", rows="10", placeholder="Write a comments...") 
+                button Add Comment
+    div.video__comments
+        ul
+            each comment in video.comments.reverse()
+                li.video__comment
+                    i.fas.fa-comment
+                    |  #{comment.text}
 
     //- div
     //-     h1=video.title
@@ -31,4 +44,5 @@ block content
     //-     a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block script 
-    script(src="/static/js/videoPlayer.js") 
+    script(src="/static/js/videoPlayer.js")
+    script(src="/static/js/commentSection.js")

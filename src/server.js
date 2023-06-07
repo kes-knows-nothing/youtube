@@ -18,6 +18,7 @@ app.set('views', process.cwd() + "/src/views"); // 폴더 경로 지정
 app.use(logger)
 app.use("/uploads", express.static("uploads"))
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(
     session({
         secret: process.env.COOKIE_SECRET,
