@@ -145,13 +145,22 @@ export const createComment = async (req, res) => {
     
     if(!video){
         return res.sendStatue(404);
+    } else {
+        const comment = await Comment.create({
+            text: text,
+            owner: user._id,
+            video: id,
+        });
+        video.comments.push(comment._id);
+        video.save();
+        
+        return res.status(201).json({ newCommentId: comment._id });
     }
-    const comment = await Comment.create({
-        text: text,
-        owner: user._id,
-        video: id,
-    });
-    video.comments.push(comment._id);
-    video.save();
-   return res.sendStatus(201).json({newCommentId: comment._id});
+}
+
+export const deleteComment = async (req, res) => {
+    const id = req.params.commentId;
+    await Comment.deleteOne({_id: id})
+    console.log("hello")
+    return res.status(200).json({ deleteId: id });
 }

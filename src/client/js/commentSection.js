@@ -1,8 +1,9 @@
-import fetch from "node-fetch";
 import { async } from "regenerator-runtime";
 
 const videoContainer = document.getElementById("videoContainer")
 const form = document.getElementById("commentForm");
+
+
 
 const addComment = (text, id) => {
     const videoComments = document.querySelector(".video__comments ul")
@@ -13,9 +14,13 @@ const addComment = (text, id) => {
     icon.className = "fas fa-comment"
     const span = document.createElement("span")
     span.innerText = ` ${text}`
+    const deleteBtn = document.createElement("button")
+    deleteBtn.innerText = "🧡"
     newComment.appendChild(icon);
     newComment.appendChild(span);
-    videoComments.appendChild(newComment);
+    newComment.appendChild(deleteBtn);
+    videoComments.prepend(newComment);
+    deleteBtn.addEventListener("click", handleDelete)
 }
 
 
@@ -40,6 +45,23 @@ const handleSubmit = async (event) => {
         addComment(text, newCommentId);
     }
 };
+
+const handleDelete = async (event) => {
+    event.preventDefault();
+    const commentId = event.target.parentElement.dataset.id;
+    const commentList = event.target.parentElement
+    const response = await fetch(`/api/comments/${commentId}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "DELETE",
+    });
+    if (response.status === 200) {
+        commentList.remove();
+    }
+
+};
+
 
 if (form) {
     form.addEventListener("submit", handleSubmit);
