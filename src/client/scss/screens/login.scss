@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+#loginForm {
+    margin:  100px auto;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    background-color: #5F264A;
+    border-radius: 20px;
+    font-family: 'League Spartan', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+#loginTitle {
+    font-family: "Black Han Sans", sans-serif;
+    position: relative;
+    bottom: 50px;
+    font-size: 50px;
+}
+
+#loginForm > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#loginForm > form > input {
+    font-family: 'Roboto', sans-serif;
+    width: 80%;
+    height: 45px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#loginInfo {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    position: relative;
+    letter-spacing: 2px;
+    font-weight: 900;
+    top: 50px;
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+}

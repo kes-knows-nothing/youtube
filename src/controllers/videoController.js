@@ -46,10 +46,16 @@ export const postEdit = async (req, res) => {
     const { id } = req.params;
     const { title, description, hashtags } = req.body;
     const video = await Video.exists({_id: id});
+    console.log(`세션 로그인 아이디 ${_id}`)
+
     if (!video) {
         return res.render("404", {pageTitle: "Video not found!"})
     }
-    if (String(video.owner) !== _id) {
+
+    const video1 = await Video.findById(id)
+    console.log(video1)
+    if (String(video1.owner) !== String(_id)) {
+        console.log("wrong id")
         return res.status(403).redirect("/")
     }
 
@@ -59,8 +65,9 @@ export const postEdit = async (req, res) => {
             hashtags: hashtags
             .split(",")
             .map((word) => (word.startsWith("#") ? word : `#${word}`))
-        })
-        req.flash("ok", success)
+        });
+        req.flash("ok", "success")
+        console.log("done")
         return res.redirect(`/videos/${id}`);
 };
     
@@ -116,9 +123,17 @@ export const deleteVideo = async (req, res) => {
     return res.redirect("/")
 }
 
-export const search =  (req, res) => {
-
-    return res.render("search", { pageTitle: "Search" });
+export const search =  async (req, res) => {
+    const { keyword } = req.query;
+    let videos = [];
+     if (keyword) {
+        videos = await Video.find({
+            title: {
+              $regex: new RegExp(`${keyword}$`, "i"),
+            },
+          });
+    } 
+    return res.render("search", { pageTitle: "Search", videos });
 };
 
 

@@ -125,8 +125,8 @@ export const finishGibhubLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    req.session.destroy()
     req.flash("info", "Bye Bye")
+    req.session.destroy()
     return res.redirect("/");
 }
 
@@ -188,18 +188,19 @@ export const getChangepassword = (req, res) => {
 
 export const postChangepassword = async (req, res) => {
     const {
-        body: { oldPassword, newPassword1, newPassword },
         session: {
           user: { _id },
         },
+        body: { oldPassword, newPassword, newPassword1 },
       } = req;
     const user = await User.findById({_id});
-    if (newPassword !== newPassword1) {
-        return res.status(400).render("change-password", {pageTitle, errorMessage: "Password confirmation does not match"});
-    }
-    const match = await bcrypt.compare(user.password, oldPassword)
+    const match = await bcrypt.compare(oldPassword, user.password)
     if (!match) {
         return res.status(404).render("login", {pageTitle: "Login Error", errorMessage: "The current password is incorrect!"})
+    }
+   
+    if (newPassword !== newPassword1) {
+        return res.status(400).render("change-password", {pageTitle, errorMessage: "Password confirmation does not match"});
     }
     user.password = newPassword
     await user.save();
