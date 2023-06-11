@@ -17,7 +17,7 @@ block content
             div 
                 button#fullScreen Enter Full Screen
 
-    br
+   
     div.video__data
         p.video__title=video.title
         small.video__owner Uploaded by 
@@ -29,7 +29,7 @@ block content
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
     
-    br
+   
     if loggedIn
         div.video__add-comments
             form.video__comment-form#commentForm 

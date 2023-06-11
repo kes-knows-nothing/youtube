@@ -48,9 +48,10 @@ const handleSubmit = async (event) => {
 
 const handleDelete = async (event) => {
     event.preventDefault();
-    const commentId = event.target.parentElement.dataset.id;
+    const videoId = videoContainer.dataset.id;
+    const commentId = event.target.parentElement.dataset.id
     const commentList = event.target.parentElement
-    const response = await fetch(`/api/comments/${commentId}`, {
+    const response = await fetch(`/api/comments/${commentId}/${videoId}`, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -59,7 +60,6 @@ const handleDelete = async (event) => {
     if (response.status === 200) {
         commentList.remove();
     }
-
 };
 
 

@@ -4,8 +4,7 @@ doctype html
 html(lang='ko')
 
     head 
-        title #{pageTitle} | Youtube!
-        link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
+        title #{pageTitle}
         link(rel="stylesheet", href="/static/css/styles.css")
 
     body 
@@ -16,31 +15,28 @@ html(lang='ko')
         if messages.success
             +message("success", messages.success)
         header
-            h1=pageTitle
-            nav
+            div#titleBox
+                img#titleImg(src="/uploads/img/psickmain2.png")
+                
+            nav#mainNav
                 ul 
-                    li 
-                        a(href="/") Home
-                    li 
-                        a(href="/search") Search
+                    li
+                        a.left(href="/")  Home |
+                    li
+                        a(href="/search") Search |
                     
                     if loggedIn 
                         li
-                            a(href="/videos/upload") Upload Video
-                        li 
-                            a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name}의 Profile
-                        li 
-                            a(href="/users/logout") Log Out
-                        li 
+                            a(href="/videos/upload") Upload Video |
+                        li
+                            a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name}의 Profile |
+                        li
+                            a(href="/users/logout") Log Out 
+                        li
                             a(href=`/users/${loggedInUser._id}`)
-                                if loggedInUser.avatarUrl === ""
-                                    span 😊
-                                else
-                                    if loggedInUser.socialOnly
-                                        span 👀
                     else 
                         li 
-                            a(href="/join") Join 
+                            a(href="/join") Join |
                         li 
                             a(href="/login") Login
         

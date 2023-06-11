@@ -1,0 +1,26 @@
+#videoContainer {
+    display:flex;
+    width: 100%;
+    padding: 30px;
+    height: 100%;
+}
+
+.videoComponent {
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.videoTitle {
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.subMetaInfo {
+    display:flex;
+}
+
+.views {
+    margin-left: 5px;
+    margin-right: 15px;
+}
