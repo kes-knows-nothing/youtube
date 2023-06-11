@@ -2,7 +2,7 @@ import { async } from "regenerator-runtime";
 
 const videoContainer = document.getElementById("videoContainer")
 const form = document.getElementById("commentForm");
-
+const deleteBtns = document.querySelectorAll(".youngjin")
 
 
 const addComment = (text, id) => {
@@ -20,7 +20,6 @@ const addComment = (text, id) => {
     newComment.appendChild(span);
     newComment.appendChild(deleteBtn);
     videoComments.prepend(newComment);
-    deleteBtn.addEventListener("click", handleDelete)
 }
 
 
@@ -43,6 +42,7 @@ const handleSubmit = async (event) => {
         textarea.value = "";
         const { newCommentId } = await response.json();
         addComment(text, newCommentId);
+        location.reload();
     }
 };
 
@@ -58,10 +58,14 @@ const handleDelete = async (event) => {
         method: "DELETE",
     });
     if (response.status === 200) {
+        console.log(commentList)
         commentList.remove();
     }
 };
 
+deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", handleDelete);
+});
 
 if (form) {
     form.addEventListener("submit", handleSubmit);

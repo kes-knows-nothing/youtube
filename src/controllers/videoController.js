@@ -172,15 +172,28 @@ export const createComment = async (req, res) => {
 }
 
 export const deleteComment = async (req, res) => {
+    const userId = req.session.user._id;
     const commentId = req.params.commentid;
-    const videoId = req.params.videoid
-    console.log(`코멘트: ${commentId}`)
-    console.log(`비디오: ${videoId}`)
-    await Comment.deleteOne({_id: commentId})
-    const video = await Video.find({_id: videoId})
-    console.log(video)
-    let commentsArr = video[0].comments;
-    console.log(`변경 전: ${commentsArr}`)
-    console.log(`변경 후: ${commentsArr}`)
-    return res.status(200).json();
+    const videoId = req.params.videoid;
+    console.log(`코멘트: ${commentId}`);
+    console.log(`비디오: ${videoId}`);
+    console.log(userId);
+    const comment = await Comment.findById(commentId);
+    console.log(`이거임 ${comment}`)
+    if (!comment) {
+        return res.sendStatue(404)
+    }
+    await Comment.findByIdAndDelete(comment._id)
+    console.log("job done!")
+    // const video = await Video.findById(videoId);
+    await Video.updateOne(
+        { _id: videoId },
+        {
+          $pull: {
+            comments: commentId,
+          },
+        }
+      );
+    // video.comments = (video.comments).filter((id) => id !== commentId);
+    return res.sendStatus(200);
 }
