@@ -18,7 +18,6 @@ export const watch = async (req, res) => {
     } else {
         return res.render("404", {pageTitle: "Video not found!"})
     }
-    
 }
 
 export const getEdit = async (req, res) => {
@@ -36,7 +35,6 @@ export const getEdit = async (req, res) => {
     }
     
     return res.render("edit", { pageTitle: `Editing ${video.title}`, video });
-
 }
 
 export const postEdit = async (req, res) => {
